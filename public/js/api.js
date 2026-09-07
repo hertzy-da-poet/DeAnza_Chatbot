@@ -13,7 +13,7 @@ function getDeviceId() {
 
 // Backend sends chunks as server-sent events. Keep the callbacks small so
 // the UI layer can decide how to render each token.
-export async function streamChat({ message, history, onToken, onDone, onError, signal }) {
+export async function streamChat({ message, history, onStatus, onToken, onDone, onError, signal }) {
   try {
     const response = await fetch(API_ENDPOINTS.CHAT, {
       method: "POST",
@@ -58,6 +58,9 @@ export async function streamChat({ message, history, onToken, onDone, onError, s
           if (data.done) {
             if (onDone) onDone();
             return;
+          }
+          if (data.status && onStatus) {
+            onStatus(data.status);
           }
           if (data.text && onToken) {
             onToken(data.text);

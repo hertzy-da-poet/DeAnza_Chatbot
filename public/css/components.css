@@ -154,12 +154,47 @@ body[data-theme="dark"] .nav-btn.active {
   line-height: 1.35;
 }
 
+.recents-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .rail-label {
   color: var(--text-soft);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0;
   text-transform: uppercase;
+}
+
+.clear-recents-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.3s ease;
+}
+
+.clear-recents-btn:hover {
+  background: var(--border);
+  color: var(--text-main);
+  transform: rotate(180deg);
+}
+
+.clear-recents-btn:active {
+  transform: rotate(360deg);
+}
+
+.clear-recents-btn svg {
+  display: block;
 }
 
 .rail-chip {

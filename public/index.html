@@ -15,7 +15,7 @@
 
   <link rel="stylesheet" href="/css/variables.css?v=3">
   <link rel="stylesheet" href="/css/layout.css?v=27">
-  <link rel="stylesheet" href="/css/components.css?v=68">
+  <link rel="stylesheet" href="/css/components.css?v=69">
 </head>
 <body>
   <div class="app-shell">
@@ -83,7 +83,17 @@
       </nav>
 
       <div class="rail-section recents-section">
-        <p class="rail-label">Recents</p>
+        <div class="recents-header">
+          <p class="rail-label">Recents</p>
+          <button id="clear-recents-btn" class="clear-recents-btn" type="button" aria-label="Clear recent chats" title="Clear recent chats">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+              <path d="M21 3v5h-5"/>
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+              <path d="M8 16H3v5"/>
+            </svg>
+          </button>
+        </div>
         <div id="recents-list" class="recents-list" aria-live="polite"></div>
         <p id="recents-empty" class="recents-empty">Your chats will show up here.</p>
       </div>
@@ -223,6 +233,6 @@
     <button id="scroll-top-btn" class="scroll-top-btn" type="button" aria-label="Scroll to top">↑</button>
   </div>
 
-  <script type="module" src="/js/app.js?v=41"></script>
+  <script type="module" src="/js/app.js?v=44"></script>
 </body>
 </html>

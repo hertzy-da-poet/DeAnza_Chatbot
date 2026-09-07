@@ -1,14 +1,15 @@
 // Chat screen wiring: view changes, theme state, prompt clicks, and requests.
-import { streamChat } from "./api.js?v=3";
+import { streamChat } from "./api.js?v=4";
 import {
   appendMessage,
   updateBotMessage,
+  updateBotStatus,
   autoResizeTextarea,
   scrollToBottom,
   setLoadingState,
   switchView,
   showToast
-} from "./ui.js?v=5";
+} from "./ui.js?v=6";
 
 const chatContainer = document.getElementById("chat-container");
 const scrollContainer = document.querySelector(".content-shell");
@@ -22,6 +23,7 @@ const welcomePanel = document.querySelector(".welcome-panel");
 const newChatBtn = document.getElementById("new-chat-btn");
 const recentsList = document.getElementById("recents-list");
 const recentsEmpty = document.getElementById("recents-empty");
+const clearRecentsBtn = document.getElementById("clear-recents-btn");
 const brandHome = document.getElementById("brand-home");
 const themeToggles = document.querySelectorAll(".theme-switch");
 const themeIcons = document.querySelectorAll(".theme-icon");
@@ -87,6 +89,56 @@ function summarizeChatTitle(query) {
   return compact.length > 38 ? `${compact.slice(0, 35).trim()}...` : compact;
 }
 
+const STORAGE_CONVERSATIONS_KEY = "da_saved_conversations";
+const STORAGE_ACTIVE_CHAT_KEY = "da_active_chat_id";
+
+function saveConversationsToStorage() {
+  try {
+    const validChats = state.conversations
+      .filter((c) => Array.isArray(c.messages) && c.messages.length > 0)
+      .slice(0, 30);
+    localStorage.setItem(STORAGE_CONVERSATIONS_KEY, JSON.stringify(validChats));
+    if (state.activeConversationId) {
+      localStorage.setItem(STORAGE_ACTIVE_CHAT_KEY, state.activeConversationId);
+    } else {
+      localStorage.setItem(STORAGE_ACTIVE_CHAT_KEY, "");
+    }
+  } catch (e) {
+    console.warn("Failed to save conversations to localStorage:", e);
+  }
+}
+
+function loadConversationsFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_CONVERSATIONS_KEY);
+    if (!raw) return false;
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed) || parsed.length === 0) return false;
+
+    state.conversations = parsed;
+    const savedActiveId = localStorage.getItem(STORAGE_ACTIVE_CHAT_KEY);
+
+    if (savedActiveId === "") {
+      renderRecents();
+      return true;
+    }
+
+    const targetChat = (savedActiveId && state.conversations.find((c) => c.id === savedActiveId))
+      || state.conversations[0];
+
+    if (targetChat && targetChat.messages && targetChat.messages.length > 0) {
+      renderConversation(targetChat);
+      return true;
+    } else {
+      renderRecents();
+      return true;
+    }
+  } catch (err) {
+    console.warn("Failed to load conversations from localStorage:", err);
+    return false;
+  }
+}
+
 function getActiveConversation() {
   return state.conversations.find((chat) => chat.id === state.activeConversationId) || null;
 }
@@ -97,6 +149,7 @@ function syncActiveConversation() {
   activeChat.history = [...state.history];
   activeChat.messages = [...state.messages];
   activeChat.updatedAt = Date.now();
+  saveConversationsToStorage();
 }
 
 function ensureActiveConversation(query) {
@@ -148,6 +201,7 @@ function resetToEmptyChat() {
   state.hasStartedChat = false;
   welcomePanel?.classList.remove("welcome-panel-hidden");
   renderRecents();
+  saveConversationsToStorage();
   if (scrollContainer) scrollContainer.scrollTop = 0;
 }
 
@@ -193,7 +247,10 @@ function openRecentChat(chatId) {
   }
   syncActiveConversation();
   const chat = state.conversations.find((item) => item.id === chatId);
-  if (chat) renderConversation(chat);
+  if (chat) {
+    renderConversation(chat);
+    saveConversationsToStorage();
+  }
 }
 
 function startNewChat() {
@@ -439,7 +496,7 @@ function stopActiveResponse() {
 
   clearRequestLock();
 
-  if (activeMessage && (activeMessage.textContent.includes("Searching official De Anza sources") || !activeMessage.textContent.trim())) {
+  if (activeMessage && (activeMessage.textContent.includes("Searching official De Anza sources") || activeMessage.textContent.includes("Preparing the answer") || !activeMessage.textContent.trim())) {
     updateBotMessage(activeMessage, "Stopped.");
   }
 
@@ -469,6 +526,30 @@ navBtns.forEach((btn) => {
     }
   });
 });
+
+function clearAllRecents() {
+  if (isRequestActive()) {
+    showToast("Please wait for the current response to finish, or stop it before clearing chats.");
+    return;
+  }
+
+  if (!state.conversations.length && !state.hasStartedChat && !state.activeConversationId) {
+    showToast("No recent chats to clear.");
+    return;
+  }
+
+  state.conversations = [];
+  resetToEmptyChat();
+  try {
+    localStorage.removeItem(STORAGE_CONVERSATIONS_KEY);
+    localStorage.removeItem(STORAGE_ACTIVE_CHAT_KEY);
+  } catch (e) {
+    console.warn("Failed to clear localStorage:", e);
+  }
+  showToast("Recent chats cleared.");
+}
+
+clearRecentsBtn?.addEventListener("click", clearAllRecents);
 
 brandHome?.addEventListener("click", () => {
   if (isMobileMenuLayout()) {
@@ -600,6 +681,13 @@ inputForm.addEventListener("submit", async (e) => {
     message: query,
     history: state.history,
     signal: state.abortController.signal,
+    onStatus: (status) => {
+      if (status === "searching") {
+        updateBotStatus(botMsgElement, "Searching official De Anza sources...");
+      } else if (status === "preparing") {
+        updateBotStatus(botMsgElement, "Preparing the answer...");
+      }
+    },
     onToken: (token) => {
       fullResponse += token;
       updateBotMessage(botMsgElement, fullResponse);
@@ -617,6 +705,7 @@ inputForm.addEventListener("submit", async (e) => {
           activeChat.messages = [...state.messages];
           activeChat.updatedAt = Date.now();
         }
+        saveConversationsToStorage();
       }
       renderRecents();
       clearRequestLock();
@@ -627,6 +716,7 @@ inputForm.addEventListener("submit", async (e) => {
       updateBotMessage(botMsgElement, errorText);
       state.messages.push({ role: "bot", content: errorText });
       syncActiveConversation();
+      saveConversationsToStorage();
       console.error("Chat Error:", err);
       clearRequestLock();
       inputBox.focus();
@@ -637,11 +727,11 @@ inputForm.addEventListener("submit", async (e) => {
 function loadConversationFromURL() {
   const params = new URLSearchParams(window.location.search);
   const rawHistory = params.get("history");
-  if (!rawHistory) return;
+  if (!rawHistory) return false;
 
   try {
     const parsed = JSON.parse(decodeURIComponent(rawHistory));
-    if (!Array.isArray(parsed) || parsed.length === 0) return;
+    if (!Array.isArray(parsed) || parsed.length === 0) return false;
 
     const firstUserMsg = parsed.find((m) => m.role === "user");
     const chatTitle = firstUserMsg ? summarizeChatTitle(firstUserMsg.content) : "Imported chat";
@@ -663,10 +753,16 @@ function loadConversationFromURL() {
 
     state.conversations.unshift(chat);
     renderConversation(chat);
+    saveConversationsToStorage();
+    return true;
   } catch (err) {
     console.error("Failed to load conversation from URL:", err);
+    return false;
   }
 }
 
-loadConversationFromURL();
+const loadedFromUrl = loadConversationFromURL();
+if (!loadedFromUrl) {
+  loadConversationsFromStorage();
+}
 

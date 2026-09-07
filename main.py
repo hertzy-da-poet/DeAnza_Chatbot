@@ -48,11 +48,14 @@ async def chat_endpoint(req: ChatRequest, request: Request):
 
     #Streaming generator
     async def event_generator():
-        async for token in stream_chat(
+        async for item in stream_chat(
             req.message,
             [h.model_dump() for h in req.history]
         ):
-            yield f"data: {json.dumps({'text': token})}\n\n"
+            if isinstance(item, dict):
+                yield f"data: {json.dumps(item)}\n\n"
+            else:
+                yield f"data: {json.dumps({'text': item})}\n\n"
         yield f"data: {json.dumps({'done': True})}\n\n"
     return StreamingResponse(
         event_generator(),

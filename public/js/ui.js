@@ -36,6 +36,15 @@ export function updateBotMessage(msgElement, rawText) {
   msgElement.innerHTML = formatMarkdown(rawText);
 }
 
+// Update loader text during pre-response phases (searching vs preparing)
+export function updateBotStatus(msgElement, statusText) {
+  if (!msgElement) return;
+  const textEl = msgElement.querySelector(".sparkle-text");
+  if (textEl) {
+    textEl.textContent = statusText;
+  }
+}
+
 // Keep citation links together so answers are easier to scan.
 export function groupSourceLinks(msgElement) {
   if (!msgElement) return;

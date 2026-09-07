@@ -4,21 +4,39 @@
 microsoft/phi-4                                
 
 ## 2. Raw AI Output
-The Transfer Admission Guarantee (TAG) program at De Anza is designed to provide students with a guaranteed admission to certain colleges and universities if they meet specific requirements. Here's how it works:
+To apply for financial aid, including FAFSA or fee waivers at De Anza College, follow these steps:
 
-### Transfer Admission Guarantee (TAG) Program
+### How to Apply for Financial Aid
 
-- **Commitment**: TAG serves as a commitment from participating colleges and universities to De Anza students who fulfill specific admission, GPA, and course requirements.
-- **Contractual Nature**: It acts as a contract between the student and the transfer institution. Students who complete a TAG and meet the contractual requirements are guaranteed admission to the university.
-- **Planning**: Students can prepare for a TAG by working with a counselor or academic adviser early in their academic career to develop an education plan for transfer.
-- **Course Assurance**: With a TAG in place, students have the assurance that each course completed is agreed upon by the participating transfer institution, minimizing the risk of losing credit.
-- **Participating Institutions**: The institutions listed as participants include several University of California campuses (UC Davis, UC Irvine, UC Merced, UC Riverside, UC Santa Barbara, UC Santa Cruz) and private colleges such as Arizona State University, Santa Clara University, University of San Francisco, and University of the Pacific.
+1. **FAFSA Application**:
+   - Most students should use the Free Application for Federal Student Aid (FAFSA), available at [studentaid.gov](https://studentaid.gov/h/apply-for-aid/fafsa).
+   - Follow the directions provided on the website carefully.
+   - Applications for each new academic year are available on October 1.
 
-### Additional Resources
+2. **California Dream Act Application (CADAA)**:
+   - Undocumented students should use the CADAA, available at [dream.csac.ca.gov](https://dream.csac.ca.gov), instead of the FAFSA.
+   - Ensure you file the CADAA by March 2 to be considered for a Cal Grant.
 
-- **Articulation and Transfer Website**: For more detailed information, students can visit the [De Anza Articulation and Transfer Services website](https://www.deanza.edu/articulation).
+3. **Application Deadlines**:
+   - Deadlines vary for different programs, but it's crucial to file by March 2 for Cal Grants.
+   - For more information and updates, visit the De Anza Financial Aid office or their website.
+
+4. **Eligibility**:
+   - All students seeking federal financial aid must have a high school diploma or GED, or have been homeschooled to meet academic qualifications.
+
+5. **Fee Waivers**:
+   - Eligible students may qualify for additional tuition coverage through programs like the California College Promise Grant fee waiver.
+
+For more detailed information and personal assistance, it's recommended to meet with a counselor at De Anza College. 
+
+### Useful Online Resources
+- **Check Your Status**: Use [MyPortal](https://www.deanza.edu/myportal) to check the status of your financial aid application, academic progress, and awards.
+- **Financial Aid Management Account**: Create an account at [deanza.studentforms.com](https://deanza.studentforms.com/account/login) to manage your financial aid.
+
+For any further questions or assistance, you can contact the Financial Aid Office at De Anza College.
 
 ### Sources
-* [Guaranteed Admission](https://www.deanza.edu/2025-2026/guaranteed-admission)
-* [Articulation and Transfer Website](https://www.deanza.edu/articulation)
+* [De Anza Financial Aid](https://www.deanza.edu/financialaid/)
+* [FAFSA Application](https://studentaid.gov/h/apply-for-aid/fafsa)
+* [California Dream Act Application](https://dream.csac.ca.gov)
         

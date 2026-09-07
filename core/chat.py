@@ -1,5 +1,5 @@
 import os
-from typing import AsyncGenerator, List
+from typing import AsyncGenerator, List, Any
 from openai import AsyncOpenAI, OpenAI
 from dotenv import load_dotenv
 from core.retrieval import hybrid_search
@@ -80,7 +80,7 @@ def is_greeting(text: str) -> bool:
 async def stream_chat(
     message: str, 
     history: List[dict] = None
-) -> AsyncGenerator[str, None]:
+) -> AsyncGenerator[Any, None]:
 
     clean_msg = message.strip()
 
@@ -98,12 +98,15 @@ async def stream_chat(
     Student Question: {message}"""
     # 3. Standard RAG retrieval
     else:
+        yield {"status": "searching"}
         search_query = condense_query_with_history(message, history)
         chunks = hybrid_search(search_query, top_k=5)
         context_text = build_prompt_context(chunks)
         user_prompt = f"""Context from official De Anza sources: {context_text}
     
     Student Question: {message}"""
+
+    yield {"status": "preparing"}
 
     # Export Retrieval Output Log
     if os.getenv("DEBUG_LOGS", "false") == "true":

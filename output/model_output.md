@@ -4,17 +4,21 @@
 microsoft/phi-4                                
 
 ## 2. Raw AI Output
-The specific date when students will receive money from the Pell Grant is not provided in the context you shared. However, you can find this information by visiting the De Anza College Financial Aid office's "Funding Dates" webpage, as mentioned in the context. This page will have details about when financial aid, including Pell Grant disbursements and refunds, will be distributed.
+The Transfer Admission Guarantee (TAG) program at De Anza is designed to provide students with a guaranteed admission to certain colleges and universities if they meet specific requirements. Here's how it works:
 
-For the most accurate and up-to-date information, it's best to contact the Financial Aid Office directly or check the official De Anza College Financial Aid website.
+### Transfer Admission Guarantee (TAG) Program
 
-### Useful Links
+- **Commitment**: TAG serves as a commitment from participating colleges and universities to De Anza students who fulfill specific admission, GPA, and course requirements.
+- **Contractual Nature**: It acts as a contract between the student and the transfer institution. Students who complete a TAG and meet the contractual requirements are guaranteed admission to the university.
+- **Planning**: Students can prepare for a TAG by working with a counselor or academic adviser early in their academic career to develop an education plan for transfer.
+- **Course Assurance**: With a TAG in place, students have the assurance that each course completed is agreed upon by the participating transfer institution, minimizing the risk of losing credit.
+- **Participating Institutions**: The institutions listed as participants include several University of California campuses (UC Davis, UC Irvine, UC Merced, UC Riverside, UC Santa Barbara, UC Santa Cruz) and private colleges such as Arizona State University, Santa Clara University, University of San Francisco, and University of the Pacific.
 
-- [De Anza Financial Aid Office](https://www.deanza.edu/financialaid/)
-- [Funding Dates Webpage](https://www.deanza.edu/financialaid/funding-dates/)
+### Additional Resources
+
+- **Articulation and Transfer Website**: For more detailed information, students can visit the [De Anza Articulation and Transfer Services website](https://www.deanza.edu/articulation).
 
 ### Sources
-
-* [De Anza Financial Aid](https://www.deanza.edu/financialaid/)
-* [De Anza College Promise](https://www.deanza.edu/promise/)
+* [Guaranteed Admission](https://www.deanza.edu/2025-2026/guaranteed-admission)
+* [Articulation and Transfer Website](https://www.deanza.edu/articulation)
         

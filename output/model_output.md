@@ -1,42 +1,29 @@
 # Model Output:
 
 ## 1. Model Used
-microsoft/phi-4                                
+meta-llama/llama-3.3-70b-instruct                                
 
 ## 2. Raw AI Output
-To apply for financial aid, including FAFSA or fee waivers at De Anza College, follow these steps:
+### Add, Drop, and Refund Deadlines for Standard 12-Week Classes
 
-### How to Apply for Financial Aid
+For standard 12-week classes, the deadlines are as follows:
+* **Last day to add 12-week classes**: October 4
+* **Last day to drop classes without a W**: October 4
+* **Last day to drop classes with a W**: November 13
 
-1. **FAFSA Application**:
-   - Most students should use the Free Application for Federal Student Aid (FAFSA), available at [studentaid.gov](https://studentaid.gov/h/apply-for-aid/fafsa).
-   - Follow the directions provided on the website carefully.
-   - Applications for each new academic year are available on October 1.
+To find the specific deadlines for your classes, including the last day to drop with a refund, you can check your schedule in the Student Registration system in **MyPortal**:
+1. Click to open the **Student Registration** card
+2. Click on **Registration Dashboard**
+3. Click on **View Registration Information**
+4. Click on **Active Registration**
+5. Select the **class name**
+6. Click on **Important Dates**
+7. Look for the **Last Day to Drop With a Refund**
 
-2. **California Dream Act Application (CADAA)**:
-   - Undocumented students should use the CADAA, available at [dream.csac.ca.gov](https://dream.csac.ca.gov), instead of the FAFSA.
-   - Ensure you file the CADAA by March 2 to be considered for a Cal Grant.
+Please note that these deadlines are for standard 12-week classes, and deadlines may vary for nonstandard-length classes.
 
-3. **Application Deadlines**:
-   - Deadlines vary for different programs, but it's crucial to file by March 2 for Cal Grants.
-   - For more information and updates, visit the De Anza Financial Aid office or their website.
-
-4. **Eligibility**:
-   - All students seeking federal financial aid must have a high school diploma or GED, or have been homeschooled to meet academic qualifications.
-
-5. **Fee Waivers**:
-   - Eligible students may qualify for additional tuition coverage through programs like the California College Promise Grant fee waiver.
-
-For more detailed information and personal assistance, it's recommended to meet with a counselor at De Anza College. 
-
-### Useful Online Resources
-- **Check Your Status**: Use [MyPortal](https://www.deanza.edu/myportal) to check the status of your financial aid application, academic progress, and awards.
-- **Financial Aid Management Account**: Create an account at [deanza.studentforms.com](https://deanza.studentforms.com/account/login) to manage your financial aid.
-
-For any further questions or assistance, you can contact the Financial Aid Office at De Anza College.
 
 ### Sources
-* [De Anza Financial Aid](https://www.deanza.edu/financialaid/)
-* [FAFSA Application](https://studentaid.gov/h/apply-for-aid/fafsa)
-* [California Dream Act Application](https://dream.csac.ca.gov)
+* [De Anza Academic Calendar](https://www.deanza.edu/calendar/)
+* [De Anza Refund Policy](https://www.deanza.edu/cashier/refunds.html)
         

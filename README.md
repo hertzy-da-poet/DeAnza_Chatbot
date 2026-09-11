@@ -27,8 +27,6 @@
 - **Strict Anti-Hallucination & Citations**: System prompt strictly enforces factual answers derived only from official college documents, finishing every factual answer with verified markdown links under `### Check these sources`.
 - **Real-Time Token Streaming**: Server-Sent Events (SSE) streaming delivering token-by-token responses with animated loading status updates ("Searching official De Anza sources...", "Preparing answer...").
 - **AST Markdown Validation**: Built-in markdown formatter sanitizes headings, separates glued bullet points, and formats lists without breaking nested sub-bullet indentation.
-- **Rate Limiting & Abuse Prevention**: Sliding window token-bucket rate limiter per device ID / IP address protecting backend resources.
-- **User Feedback Collection**: Endpoints to record student ratings (thumbs up/down) directly into PostgreSQL for continuous prompt and retrieval optimization.
 
 ---
 
@@ -63,9 +61,6 @@ flowchart TD
     SSE -->|"Token Stream"| UI
     UI --> Formatter["Markdown Sanitizer (config.js)"]
     Formatter --> RenderedMsg["Rendered Answer + Check these sources"]
-    
-    RenderedMsg --> Feedback["Student Rating (Thumbs Up/Down)"]
-    Feedback -->|"POST /api/feedback"| DB[("PostgreSQL Database")]
 ```
 
 1. **Intake & Rate Limiting (`main.py` + `rate_limiter.py`)**: Receives request payload, checks device ID and client IP against the sliding window rate limiter.
@@ -74,7 +69,6 @@ flowchart TD
 4. **Prompt Assembly & Guardrails (`chat.py`)**: Injects strict formatting rules, recent conversation turns, and verified context with source URLs.
 5. **Model Orchestration & Fallback**: Dispatches streaming chat completion to OpenRouter. If the primary model fails or times out, the system automatically falls back to secondary models.
 6. **Live Streaming & Rendering (`app.js` + `config.js`)**: Streams tokens to the client over SSE, sanitizes headings and lists, and groups citation links.
-7. **Feedback & Quality Monitoring (`db.py`)**: Stores user ratings and interaction pairs in PostgreSQL for evaluation analysis.
 
 ---
 

@@ -18,7 +18,6 @@ const API_ORIGIN = getApiOrigin();
 
 export const API_ENDPOINTS = {
   CHAT: `${API_ORIGIN}/api/chat`,
-  FEEDBACK: `${API_ORIGIN}/api/feedback`,
 };
 
 function escapeHtml(value = "") {

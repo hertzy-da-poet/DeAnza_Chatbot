@@ -41,12 +41,7 @@ class ChatRequest(BaseModel):
     message: str
     history: List[ChatMessage] = Field (default_factory=list)
 
-# estimate the relevance of the answers to the request. This is needed for Active Learning to improve model's performance over time
-class FeedbackRequest(BaseModel):
-    query_text: str
-    answer_text: str
-    rating: int # 1 for up, 0 for down
-    model_used: str # to report which model returns the bad answer
+
 
 #THis class is to define each single chat message
 class MessageItem(BaseModel):

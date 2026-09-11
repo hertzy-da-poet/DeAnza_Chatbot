@@ -3,7 +3,7 @@ from fastapi import FastAPI, Request, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
-from core.schemas import ChatRequest, FeedbackRequest
+from core.schemas import ChatRequest
 from core.chat import stream_chat
 from core.db import get_db
 from core.rate_limiter import chat_limiter, get_client_ip
@@ -61,25 +61,6 @@ async def chat_endpoint(req: ChatRequest, request: Request):
         event_generator(),
         media_type="text/event-stream",
     )
-
-@app.post("/api/feedback")
-def submit_feedback(req: FeedbackRequest):
-    with get_db() as conn:
-        conn.autocommit = True
-        with conn.cursor() as cur:
-            cur.execute(
-                """
-                INSERT INTO feedback (query_text, answer_text, rating, model_used)
-                VALUES (%s, %s, %s, %s)
-                """,
-                (
-                    req.query_text,
-                    req.answer_text,
-                    req.rating,
-                    req.model_used,
-                )
-            )
-    return {"status": "recorded"}
 
 app.mount("/", StaticFiles(
     directory="public",

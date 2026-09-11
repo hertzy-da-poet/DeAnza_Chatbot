@@ -54,6 +54,7 @@ def run_pipeline():
     all_chunks = list(unique_chunks.values())
     print(f"Total generated chunks: {len(all_chunks)}")
 
+
     #Check if the new hash text is the same with the existing text (avoid embedding if it stays the same)
     print ("\n------ Checking for Data Differences -------")
     with get_db() as conn:

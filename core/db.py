@@ -52,15 +52,6 @@ CREATE TABLE IF NOT EXISTS crawl_cache (
     updated_at    TIMESTAMPTZ DEFAULT now(),
     PRIMARY KEY (source_type, doc_id)
 );
-
-CREATE TABLE IF NOT EXISTS feedback (
-    id          SERIAL PRIMARY KEY,
-    query_text  TEXT,
-    answer_text TEXT,
-    rating      SMALLINT,
-    model_used  TEXT,
-    created_at  TIMESTAMPTZ DEFAULT now()
-);
 """
 
 _pool = None

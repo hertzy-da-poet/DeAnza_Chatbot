@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://de-anza-chatbot.vercel.app/sitemap.xml
+Sitemap: https://dachatbot.com/sitemap.xml

@@ -59,7 +59,7 @@ export function groupSourceLinks(msgElement) {
 
   const label = document.createElement("div");
   label.className = "source-label";
-  label.textContent = "Sources";
+  label.textContent = "Check these sources";
   group.appendChild(label);
 
   const list = document.createElement("div");

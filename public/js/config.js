@@ -61,10 +61,10 @@ export function formatMarkdown(rawText) {
     .replace(/(?:[^\n]|^)\s*(#{1,6}\s+)/g, "\n\n$1")
     // Split attached header descriptions.
     .replace(/(#{1,4}\s+[A-Za-z0-9\s/\\-]+?):\s+([A-Za-z])/g, "$1\n$2")
-    // Separate bullet lists that arrive glued to the previous sentence.
-    .replace(/:\s*\*\s*/g, ":\n\n* ")
-    // Same idea, but for bullets after sentence punctuation.
-    .replace(/([.!?])\s*\*\s+/g, "$1\n\n* ")
+    // Separate bullet lists that arrive glued to the previous sentence on the same line.
+    .replace(/:(?![ \t]*\n)[ \t]*[\*\-][ \t]+/g, ":\n\n* ")
+    // Same idea, but for bullets after sentence punctuation on the same line.
+    .replace(/([.!?])(?![ \t]*\n)[ \t]+[\*\-][ \t]+/g, "$1\n\n* ")
     // Avoid huge gaps after normalization.
     .replace(/\n{3,}/g, "\n\n");
 

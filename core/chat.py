@@ -38,7 +38,12 @@ RULES:
     - Use bullet points (*) on separate lines for requirements, prerequisites, steps, fees, or dates.
     - Use bold text for key terms, course codes, deadlines, and requirements.
     - Separate distinct topics with ### headers.
-7. CITATIONS: If factual information from sources was used, always leave TWO blank lines and end with a separate "### Sources" header. Format each source as a clean clickable bullet markdown link on its own line: `* [Source Title](URL)`. Never attach ### to preceding text. For greetings, pleasantries, or casual chat, do NOT include a Sources section.
+7. CITATIONS & SOURCES (MANDATORY): Whenever factual information from the provided context is used to answer a question, you MUST end your response with a final section titled exactly "### Check these sources".
+    - Leave TWO blank lines before the "### Check these sources" header.
+    - Under it, list the official source URL(s) from the `(Source: <url>)` of the documents you referenced, formatted as bullet links: `* [Descriptive Title](URL)`.
+    - Do NOT invent other headings like "### Sources", "### Additional Resources", or "### Related Links".
+    - Do NOT place links inside paragraph text; always place them under "### Check these sources".
+    - For greetings, pleasantries, or casual chat, do NOT include this section.
 8. MISSING URLs: If the context mentions a form, website, or office but does NOT provide the exact URL, do not try to write a link. Simply state the name of the office or form (e.g. "Use the FAFSA application" instead of "Use the FAFSA available at [link]"). Never output incomplete sentences or blank links.
 
 EXAMPLE INTERACTION:
@@ -55,7 +60,7 @@ Here is the information for CIS 22A:
 * **Advisory**: EWRT 1A or ESL 5, and MATH 114
 
 
-### Sources
+### Check these sources
 * [CIS 22A Catalog](https://deanza.elumenapp.com/catalog/course/CIS%2022A)
 """
 

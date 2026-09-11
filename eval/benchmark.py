@@ -343,7 +343,55 @@ def export_results(all_results: dict, output_dir: str, print_summary: bool = Tru
             writer.writeheader()
             writer.writerows(csv_rows)
 
-    # 3. Print Console Summary Table
+    # 3. Export Aggregated Model Summary CSV (benchmark_summary.csv)
+    summary_rows = []
+    for model_id, records in all_results.items():
+        if not records:
+            continue
+        graded = [r for r in records if r.get("grade", {}).get("correct") is not None]
+        total_q = len(records)
+        acc_pct = round((sum(1 for r in graded if r["grade"].get("correct") is True) / len(graded) * 100), 2) if graded else 0.0
+        avg_score = round(sum(r.get("grade", {}).get("score", 0) or 0 for r in graded) / len(graded), 2) if graded else 0.0
+        halluc_pct = round((sum(1 for r in graded if r.get("grade", {}).get("hallucinated") is True) / len(graded) * 100), 2) if graded else 0.0
+        md_pass_pct = round((sum(1 for r in records if r.get("markdown", {}).get("markdown_valid")) / total_q * 100), 2)
+        avg_ttft = round(sum(r.get("ttft_ms", 0) for r in records) / total_q, 2)
+        avg_lat = round(sum(r.get("total_latency_ms", 0) for r in records) / total_q, 2)
+        total_prompt = sum(r.get("prompt_tokens", 0) for r in records)
+        total_comp = sum(r.get("completion_tokens", 0) for r in records)
+        total_cost = round(sum(r.get("cost_usd", 0.0) for r in records), 4)
+
+        summary_rows.append({
+            "model": model_id,
+            "total_questions": total_q,
+            "accuracy_pct": acc_pct,
+            "avg_score": avg_score,
+            "hallucination_pct": halluc_pct,
+            "markdown_pass_pct": md_pass_pct,
+            "avg_ttft_ms": avg_ttft,
+            "avg_latency_ms": avg_lat,
+            "total_prompt_tokens": total_prompt,
+            "total_completion_tokens": total_comp,
+            "total_cost_usd": total_cost,
+        })
+
+    if summary_rows:
+        # Write to eval_results directory
+        eval_summary_path = out_path / "benchmark_summary.csv"
+        with eval_summary_path.open("w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(summary_rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(summary_rows)
+
+        # Also write to output directory for notebook access
+        output_dir_path = Path("output")
+        output_dir_path.mkdir(parents=True, exist_ok=True)
+        output_summary_path = output_dir_path / "benchmark_summary.csv"
+        with output_summary_path.open("w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(summary_rows[0].keys()))
+            writer.writeheader()
+            writer.writerows(summary_rows)
+
+    # 4. Print Console Summary Table
     if print_summary:
         print("\n" + "=" * 90)
         print(f"{'Model':<35} | {'Acc %':<7} | {'MD Pass %':<9} | {'Avg TTFT':<10} | {'Avg Lat':<9} | {'Avg Cost'}")
@@ -569,7 +617,19 @@ if __name__ == "__main__":
     parser.add_argument("--limit", type=int, default=None, help="Limit number of golden set questions to run")
     parser.add_argument("--output-dir", type=str, default="eval_results", help="Directory for output JSON and CSV")
     parser.add_argument("--judge-workers", type=int, default=3, help="Concurrent workers for background LLM judge")
+    parser.add_argument("--summary-only", action="store_true", help="Generate benchmark_summary.csv directly from benchmark_results.json without calling APIs")
     args = parser.parse_args()
+
+    if args.summary_only:
+        json_path = Path(args.output_dir) / "benchmark_results.json"
+        if not json_path.exists():
+            print(f"Error: {json_path} not found.")
+            sys.exit(1)
+        print(f"Generating summary from {json_path}...")
+        data = json.loads(json_path.read_text(encoding="utf-8"))
+        export_results(data, args.output_dir, print_summary=True)
+        print("\nSuccessfully updated benchmark_summary.csv in both eval_results/ and output/.")
+        sys.exit(0)
 
     run_benchmark(
         target_model=args.model,

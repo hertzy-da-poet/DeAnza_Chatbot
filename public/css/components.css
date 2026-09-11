@@ -1124,6 +1124,10 @@ body[data-theme="dark"] .contact-link:hover {
 }
 
 @media (max-width: 900px) {
+  .top-actions {
+    display: none;
+  }
+
   .mobile-menu-trigger,
   .mobile-topbar-actions {
     display: flex;
